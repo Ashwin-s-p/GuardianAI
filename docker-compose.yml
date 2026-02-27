@@ -1,0 +1,37 @@
+version: "3.9"
+
+services:
+
+  mongo:
+    image: mongo:7
+    container_name: guardian-mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+  backend:
+    build: ./backend
+    container_name: guardian-backend
+    restart: always
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mongo
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/guardian
+    command: npm start
+
+  frontend:
+    build: ./frontend
+    container_name: guardian-frontend
+    restart: always
+    ports:
+      - "4173:4173"
+    depends_on:
+      - backend
+    command: npm run preview
+
+volumes:
+  mongo-data:

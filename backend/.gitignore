@@ -1,5 +1,4 @@
-dist/
 node_modules/
-.wrangler/
-.dev.vars
-worker-configuration.d.ts
+backend/node_modules/
+frontend/node_modules/
+.env
