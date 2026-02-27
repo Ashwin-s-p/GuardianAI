@@ -1,32 +1,52 @@
-import { Shield, Camera, Circle, Play } from "lucide-react";
+import { Shield, Circle, Play, Bell } from "lucide-react";
+import { Button } from "@/react-app/components/ui/button";
+import { Link } from "react-router-dom";
+import { useState } from "react";
 
 export default function CCTVMonitor() {
+
+  const cameras = [
+    { name: "CAM01", location: "College - Wagholi", online: true, video: "C:\\Users\\adiva\\Desktop\\AlertVision\\Pandora\\backend\\cameras\\CAM01_College.mp4" },
+    { name: "CAM02", location: "Railway Gate - Central", online: true, video: "https://www.w3schools.com/html/movie.mp4" },
+    { name: "CAM03", location: "Mall Entrance - West Wing", online: false, video: "" },
+    { name: "CAM04", location: "Highway Exit - Route 9", online: true, video: "https://www.w3schools.com/html/mov_bbb.mp4" },
+    { name: "CAM05", location: "School Zone - Block C", online: true, video: "https://www.w3schools.com/html/movie.mp4" },
+    { name: "CAM06", location: "Park Entrance - North", online: false, video: "" },
+  ];
+
+  const [selectedCamera, setSelectedCamera] = useState(cameras[0]);
+  const [isPlaying, setIsPlaying] = useState(false);
+
   return (
     <div className="min-h-screen bg-gray-100">
 
-      {/* NAVBAR (same theme as Dashboard) */}
-      <div className="bg-white border-b px-8 py-4 flex justify-between items-center">
-        <div className="flex items-center gap-3">
-          <div className="bg-blue-600 text-white p-2 rounded-lg">
-            <Shield size={20} />
+      {/* NAVBAR */}
+      <nav className="bg-white border-b border-border sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-6 h-16 flex justify-between items-center">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
+              <Shield className="w-6 h-6 text-white" />
+            </div>
+            <div>
+              <h1 className="font-bold">Guardian AI</h1>
+              <p className="text-xs text-muted-foreground">Missing Person Surveillance</p>
+            </div>
           </div>
-          <div>
-            <h1 className="font-semibold text-lg text-gray-800">
-              Guardian AI
-            </h1>
-            <p className="text-sm text-gray-500">
-              Missing Person Surveillance
-            </p>
-          </div>
-        </div>
 
-        <div className="flex items-center gap-6 text-gray-600">
-          <span className="cursor-pointer hover:text-blue-600">Dashboard</span>
-          <span className="text-blue-600 font-medium cursor-pointer">
-            CCTV Monitor
-          </span>
+          <div className="flex items-center gap-4">
+            <Link to="/" className="text-sm text-muted-foreground hover:text-foreground"> Home </Link>
+            <Link to="/dashboard" className="text-sm text-muted-foreground hover:text-foreground"> Dashboard </Link>
+            <Link to="/cctv" className="text-sm font-medium text-primary"> CCTV Monitor </Link>
+
+            <Button size="sm" variant="outline" className="relative">
+              <Bell className="w-4 h-4" />
+              <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white text-[10px] rounded-full flex items-center justify-center">
+                3
+              </span>
+            </Button>
+          </div>
         </div>
-      </div>
+      </nav>
 
       {/* PAGE CONTENT */}
       <div className="px-10 py-8">
@@ -48,14 +68,19 @@ export default function CCTVMonitor() {
           </h3>
 
           <div className="grid grid-cols-3 gap-4">
-
-            <CameraCard name="CAM01" location="Bus Stop - Sector 7" online />
-            <CameraCard name="CAM02" location="Railway Gate - Central" online />
-            <CameraCard name="CAM03" location="Mall Entrance - West Wing" />
-            <CameraCard name="CAM04" location="Highway Exit - Route 9" online />
-            <CameraCard name="CAM05" location="School Zone - Block C" online />
-            <CameraCard name="CAM06" location="Park Entrance - North" />
-
+            {cameras.map((cam) => (
+              <CameraCard
+                key={cam.name}
+                name={cam.name}
+                location={cam.location}
+                online={cam.online}
+                isSelected={selectedCamera.name === cam.name}
+                onClick={() => {
+                  setSelectedCamera(cam);
+                  setIsPlaying(false);
+                }}
+              />
+            ))}
           </div>
         </div>
 
@@ -65,17 +90,35 @@ export default function CCTVMonitor() {
           {/* VIDEO FEED */}
           <div className="bg-white rounded-2xl shadow-sm border overflow-hidden">
             <div className="px-6 py-4 border-b text-sm font-medium text-gray-600">
-              CAM01 — Bus Stop - Sector 7
+              {selectedCamera.name} — {selectedCamera.location}
             </div>
 
             <div className="h-80 bg-gray-200 flex items-center justify-center text-gray-400">
-              No Live Feed
+              {isPlaying && selectedCamera.video ? (
+                <video
+                  key={selectedCamera.video}
+                  src={selectedCamera.video}
+                  controls
+                  autoPlay
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                "No Live Feed"
+              )}
             </div>
 
             <div className="p-4 border-t">
-              <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg text-sm flex items-center justify-center gap-2">
+              <button
+                onClick={() => setIsPlaying(true)}
+                disabled={!selectedCamera.online}
+                className={`w-full py-2 rounded-lg text-sm flex items-center justify-center gap-2
+                  ${selectedCamera.online
+                    ? "bg-blue-600 hover:bg-blue-700 text-white"
+                    : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                  }`}
+              >
                 <Play size={16} />
-                Start Camera
+                {selectedCamera.online ? "Start Camera" : "Camera Offline"}
               </button>
             </div>
           </div>
@@ -100,11 +143,15 @@ export default function CCTVMonitor() {
 
 /* CAMERA CARD COMPONENT */
 
-function CameraCard({ name, location, online }: any) {
+function CameraCard({ name, location, online, onClick, isSelected }: any) {
   return (
-    <div className={`rounded-xl border p-4 flex justify-between items-start transition
-      ${online ? "bg-blue-50 border-blue-200" : "bg-gray-50 border-gray-200"}
-    `}>
+    <div
+      onClick={onClick}
+      className={`cursor-pointer rounded-xl border p-4 flex justify-between items-start transition hover:shadow-md
+        ${online ? "bg-blue-50 border-blue-200" : "bg-gray-50 border-gray-200"}
+        ${isSelected ? "ring-2 ring-blue-500" : ""}
+      `}
+    >
       <div>
         <p className="font-semibold text-gray-800">{name}</p>
         <p className="text-xs text-gray-500">{location}</p>
@@ -112,7 +159,11 @@ function CameraCard({ name, location, online }: any) {
 
       <Circle
         size={10}
-        className={online ? "text-green-500 fill-green-500" : "text-red-500 fill-red-500"}
+        className={
+          online
+            ? "text-green-500 fill-green-500"
+            : "text-red-500 fill-red-500"
+        }
       />
     </div>
   );

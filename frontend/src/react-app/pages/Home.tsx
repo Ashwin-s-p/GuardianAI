@@ -2,15 +2,12 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Shield,
-  Camera,
   Brain,
   AlertTriangle,
   Bell,
   Upload,
   ChevronRight,
   Eye,
-  MapPin,
-  Clock,
 } from "lucide-react";
 
 import { Button } from "@/react-app/components/ui/button";
@@ -226,36 +223,6 @@ export default function HomePage() {
               </form>
             </CardContent>
           </Card>
-        </div>
-      </section>
-
-      {/* CCTV SECTION */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-6">
-          <h2 className="text-2xl font-bold mb-8">Active CCTV Cameras</h2>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            {cctvCameras.map((cam) => (
-              <Card key={cam.id}>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Camera className="w-4 h-4" />
-                    {cam.id}
-                  </CardTitle>
-                  <p className="text-sm text-muted-foreground flex items-center gap-1">
-                    <MapPin className="w-3 h-3" /> {cam.location}
-                  </p>
-                </CardHeader>
-                <CardContent className="flex justify-between text-sm">
-                  <span>{cam.status}</span>
-                  <span className="flex items-center gap-1">
-                    <Clock className="w-3 h-3" />
-                    {cam.lastActivity}
-                  </span>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
         </div>
       </section>
 
