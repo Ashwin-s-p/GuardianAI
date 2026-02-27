@@ -1,12 +1,16 @@
-FROM node:18
+FROM node:18-slim
 
 WORKDIR /app
 
+# Copy only package files first
 COPY package*.json ./
 
-RUN npm install
+# Install production dependencies
+RUN npm install --production
 
-COPY . .
+# Copy source code only (ignore videos)
+COPY src/ ./src
+COPY public/*.html ./public
 
 EXPOSE 5000
 
