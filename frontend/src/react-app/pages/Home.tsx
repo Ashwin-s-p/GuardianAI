@@ -73,26 +73,26 @@ export default function HomePage() {
           </div>
 
           <div className="flex items-center gap-5">
-          <Link to="/" className="text-sm font-medium text-primary">
-            Home
-          </Link>
+            <Link to="/" className="text-sm font-medium text-primary">
+              Home
+            </Link>
 
-          <Link
-            to="/dashboard"
-            className="text-sm font-medium text-muted-foreground hover:text-foreground">
-            Dashboard
-          </Link>
+            <Link
+              to="/dashboard"
+              className="text-sm font-medium text-muted-foreground hover:text-foreground">
+              Dashboard
+            </Link>
 
-          <Link
-            to="/cctv"
-            className="text-sm font-medium text-muted-foreground hover:text-foreground">
-            CCTV Monitor
-          </Link>
+            <Link
+              to="/cctv"
+              className="text-sm font-medium text-muted-foreground hover:text-foreground">
+              CCTV Monitor
+            </Link>
 
-          <a href="#register">
-            <Button size="sm">Report Missing</Button>
-          </a>
-        </div>
+            <a href="#register">
+              <Button size="sm">Report Missing</Button>
+            </a>
+          </div>
         </div>
       </nav>
 
@@ -108,6 +108,11 @@ export default function HomePage() {
             Finding Missing Persons with{" "}
             <span className="text-primary">Intelligent Detection</span>
           </h1>
+
+          {/* ✅ ADDED FOR CI/CD TEST — DO NOT REMOVE */}
+          <p className="text-red-600 font-bold">
+            CI/CD SUCCESS 🚀
+          </p>
 
           <p className="text-muted-foreground mb-8">
             Our AI continuously monitors CCTV networks using facial recognition
