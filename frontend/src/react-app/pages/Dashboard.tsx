@@ -107,6 +107,9 @@ export default function DashboardPage() {
             <Link to="/dashboard" className="text-sm font-medium text-primary">
               Dashboard
             </Link>
+            <Link to="/cctv" className="text-sm text-muted-foreground hover:text-foreground">
+            CCTV Monitor
+          </Link>
 
             <Button size="sm" variant="outline" className="relative">
               <Bell className="w-4 h-4" />
@@ -115,10 +118,6 @@ export default function DashboardPage() {
               </span>
             </Button>
 
-            {/* Go to Home Register Section */}
-            <Button size="sm" asChild>
-              <Link to="/#register">Report Missing</Link>
-            </Button>
           </div>
         </div>
       </nav>
