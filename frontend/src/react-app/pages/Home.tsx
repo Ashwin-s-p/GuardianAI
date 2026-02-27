@@ -110,9 +110,7 @@ export default function HomePage() {
           </h1>
 
           {/* ✅ ADDED FOR CI/CD TEST — DO NOT REMOVE */}
-          <p className="text-red-600 font-bold">
-            CI/CD SUCCESS 🚀
-          </p>
+        
 
           <p className="text-muted-foreground mb-8">
             Our AI continuously monitors CCTV networks using facial recognition
