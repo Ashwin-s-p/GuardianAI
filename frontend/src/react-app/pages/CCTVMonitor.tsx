@@ -6,13 +6,43 @@ import { useState } from "react";
 export default function CCTVMonitor() {
 
   const cameras = [
-    { name: "CAM01", location: "College - Wagholi", online: true, video: "C:\\Users\\adiva\\Desktop\\AlertVision\\Pandora\\backend\\cameras\\CAM01_College.mp4" },
-    { name: "CAM02", location: "Railway Gate - Central", online: true, video: "https://www.w3schools.com/html/movie.mp4" },
-    { name: "CAM03", location: "Mall Entrance - West Wing", online: false, video: "" },
-    { name: "CAM04", location: "Highway Exit - Route 9", online: true, video: "https://www.w3schools.com/html/mov_bbb.mp4" },
-    { name: "CAM05", location: "School Zone - Block C", online: true, video: "https://www.w3schools.com/html/movie.mp4" },
-    { name: "CAM06", location: "Park Entrance - North", online: false, video: "" },
-  ];
+  {
+    name: "CAM01",
+    location: "College",
+    online: true,
+    video: "https://guardianai-videos.s3.ap-south-1.amazonaws.com/CAM1.mp4"
+  },
+  {
+    name: "CAM02",
+    location: "Shopping Mall",
+    online: true,
+    video: "https://guardianai-videos.s3.ap-south-1.amazonaws.com/CAM2.mp4"
+  },
+  {
+    name: "CAM03",
+    location: "Bus Stand",
+    online: false,
+    video: ""
+  },
+  {
+    name: "CAM04",
+    location: "Railway Station",
+    online: true,
+    video: "https://guardianai-videos.s3.ap-south-1.amazonaws.com/CAM3.mp4"
+  },
+  {
+    name: "CAM05",
+    location: "Highway",
+    online: true,
+    video: "https://guardianai-videos.s3.ap-south-1.amazonaws.com/cam4.mp4"
+  },
+  {
+    name: "CAM06",
+    location: "Bhaji Market",
+    online: false,
+    video: ""
+  },
+];
 
   const [selectedCamera, setSelectedCamera] = useState(cameras[0]);
   const [isPlaying, setIsPlaying] = useState(false);
